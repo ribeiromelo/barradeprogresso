@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Bars</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: white;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .range-container {
+            position: relative;
+            width: 100%;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 10px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4caf50;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #4caf50;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .range-value {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <h3>Meta de questões da semana</h3>
+        <div class="range-container">
+            <input type="range" min="0" max="100" id="range-1">
+            <div class="range-value" id="value-1">20%</div>
+        </div>
+    </div>
+    <div class="progress-container">
+        <h3>Meta de organização pessoal</h3>
+        <div class="range-container">
+            <input type="range" min="0" max="100" id="range-2">
+            <div class="range-value" id="value-2">45%</div>
+        </div>
+    </div>
+
+    <script>
+        function updateValue(rangeElement, valueId) {
+            const valueElement = document.getElementById(valueId);
+            const value = rangeElement.value;
+            valueElement.textContent = value + '%';
+            localStorage.setItem(valueId, value);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const range1Value = localStorage.getItem('value-1') || 20;
+            const range2Value = localStorage.getItem('value-2') || 45;
+
+            const range1 = document.getElementById('range-1');
+            const value1 = document.getElementById('value-1');
+            range1.value = range1Value;
+            value1.textContent = range1Value + '%';
+
+            const range2 = document.getElementById('range-2');
+            const value2 = document.getElementById('value-2');
+            range2.value = range2Value;
+            value2.textContent = range2Value + '%';
+
+            range1.addEventListener('input', () => updateValue(range1, 'value-1'));
+            range2.addEventListener('input', () => updateValue(range2, 'value-2'));
+        });
+    </script>
+</body>
+</html>
